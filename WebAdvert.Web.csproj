@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AdvertApi.Models.Fg" Version="1.0.0" />
     <PackageReference Include="Amazon.AspNetCore.Identity.Cognito" Version="1.0.3" />
-    <PackageReference Include="Amazon.Extensions.CognitoAuthentication" Version="1.0.3" />
-    <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="1.2.0" />
+    <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="1.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.111.12" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

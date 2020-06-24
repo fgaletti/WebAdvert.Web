@@ -52,7 +52,7 @@ namespace WebAdvert.Web.Controllers
                     ModelState.AddModelError("UserExists", "User with this email already exists");
                 }
             }
-           // user.Attributes.Add(CognitoAttributesConstants.Name, model.Email);
+          // user.Attributes.Add(CognitoAttributesConstants.Name, model.Email);
             user.Attributes.Add(CognitoAttribute.Name.AttributeName, model.Email);
 
             //user.Attributes.Add("name", model.Email);
@@ -99,7 +99,9 @@ namespace WebAdvert.Web.Controllers
                     return View(model);
                 }
 
-                var result = await _userManager.ConfirmEmailAsync(user, model.Code).ConfigureAwait(false);
+              //  var result = await _userManager.ConfirmEmailAsync(user, model.Code).ConfigureAwait(false);
+               var result = await (_userManager as CognitoUserManager<CognitoUser>).ConfirmSignUpAsync(user, model.Code, true).ConfigureAwait(false);
+
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
@@ -117,6 +119,33 @@ namespace WebAdvert.Web.Controllers
 
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Login")]
+        public async Task<IActionResult> LoginPost(LoginModel model)
+        {
+            //14
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email,
+                    model.Password, model.RememberMe, false).ConfigureAwait(false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("LoginError", "Email and password do not match");
+                }
+            }
+            return View("Login", model);
         }
     }
 }
