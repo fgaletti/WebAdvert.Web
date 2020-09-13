@@ -23,7 +23,7 @@ namespace WebAdvert.Web.Services
         {
             if (string.IsNullOrEmpty(fileName)) throw new ArgumentException("File name must be specified.");
 
-            var bucketName = _configuration.GetValue<string>("Images");
+            var bucketName = _configuration.GetValue<string>("ImageBucket");
 
             using (var client = new AmazonS3Client())
             {

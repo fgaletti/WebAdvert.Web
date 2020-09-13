@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -59,12 +60,15 @@ namespace WebAdvert.Web
             {
                 options.LoginPath = "/Accounts/Login";
             });
+
+            services.AddAutoMapper();
             services.AddTransient<IFileUploader, S3FileUploader>(); // 22 
                                                                     // services.AddHttpClient<IAdvertApiClient, AdvertApiClient>(); //24 
 
+            services.AddHttpClient<IAdvertApiClient, AdvertApiClient>();
             // 26 Add extension Polly
-            services.AddHttpClient<IAdvertApiClient, AdvertApiClient>().AddPolicyHandler(GetRetryPolicy()) //26
-                     .AddPolicyHandler(GetCircuitBreakerPatternPolicy());
+            //services.AddHttpClient<IAdvertApiClient, AdvertApiClient>().AddPolicyHandler(GetRetryPolicy()) //26
+            //         .AddPolicyHandler(GetCircuitBreakerPatternPolicy());
 
             //  services.AddRazorPages();
         }
